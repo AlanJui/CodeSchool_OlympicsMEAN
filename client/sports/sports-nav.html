@@ -1,4 +1,12 @@
-<div class="cell">
+<ul>
+  <li ng-repeat="sport in vm.sports">
+    <a ui-sref="sports.medals({sportName: sport})">{{sport}}</a>
+  </li>
+</ul>
+
+<div ui-view></div>
+
+<!-- <div class="cell">
   <div class="sports-list">
     <ul class="grid list list--unstyled mbl" ng-cloak>
       <li class="grid-box grid-box--6of12 sport-name" ng-repeat="sport in sportsCtrl.sports">
@@ -16,4 +24,4 @@
   </div>
 </div>
 
-<div class="sports-info"  ui-view></div>
+<div class="sports-info"  ui-view></div> -->
