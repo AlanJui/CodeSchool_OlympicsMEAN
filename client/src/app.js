@@ -7,4 +7,10 @@ angular.module('olympics', [])
       .then( (response) => {
         this.sports = response.data;
       });
+
+    // let self = this;
+    // $http.get('/sports')
+    //   .then(function (response) {
+    //     self.sports = response.data;
+    //   });
   }]);
