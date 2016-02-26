@@ -1,6 +1,6 @@
-<form class="form" name="newMedalForm" ng-submit="newMedalCtrl.saveMedal(medal)"/>
+<form class="form" name="newMedalForm" ng-submit="vm.saveMedal(medal)"/>
 
-  <h3 class="mbm">New Medal for {{newMedalCtrl.sportName}}</h3>
+  <h3 class="mbm">New Medal for {{vm.sportName}}</h3>
 
   <div class="form-field">
     <label class="form-label" for="division">Division:</label>
@@ -23,3 +23,5 @@
   <input class="btn" type="submit" value="Submit" />
 
 </form>
+
+<!-- {{medal}} -->

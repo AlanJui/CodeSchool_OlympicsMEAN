@@ -55,6 +55,13 @@ angular.module('olympics', ['ui.router'])
         controller: 'sportController',
         controllerAs: 'vm'
       })
+
+      .state('sports.new', {
+        url: '/:sportName/medal/new',
+        templateUrl: 'sports/new-medal.html',
+        controller: 'NewMedalController',
+        controllerAs: 'vm'
+      })
   })
 
   .controller('sportsController', ['sportsService', function (sportsService) {
@@ -68,4 +75,17 @@ angular.module('olympics', ['ui.router'])
     this.sport = sportService.data;
 
   }])
+
+  .controller('NewMedalController', ['$stateParams', '$state',
+    function ($stateParams, $state) {
+      this.sportName = $stateParams.sportName;
+
+      this.saveMedal = (medal) => {
+        console.log('medal=', medal);
+
+        $state.go('sports.medals', {
+          sportName: $stateParams.sportName
+        });
+      };
+    }])
   ;
