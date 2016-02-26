@@ -44,10 +44,21 @@ app.post('/sports/:name/medals', jsonParser, (request, response) => {
   let sportName = request.params.name;
   let newMedal = request.body.medal;
 
-  console.log(`Sport Name: ${sportName}`);
-  console.log(`Medal: `, newMedal);
+  // console.log(`Sport Name: ${sportName}`);
+  // console.log(`Medal: `, newMedal);
 
-  response.sendStatus(201);
+  let sports = mongoUtil.sports();
+  let query = {name: sportName};
+  let update = {$push: {goldMedals: newMedal}};
+
+  sports.findOneAndUpdate(query, update, (err, res) => {
+    if (err) {
+      response.sendStatus(400);
+    }
+
+    response.sendStatus(201);
+  });
+
 });
 
 app.listen(8181, () => console.log('Listening on 8181'));
