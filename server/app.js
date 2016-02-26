@@ -9,6 +9,9 @@ mongoUtil.connect();
 // app.use(express.static(__dirname + '/../client'));
 app.use(express.static(`${__dirname}/../client`));
 
+let bodyParser = require('body-parser');
+let jsonParser = bodyParser.json();
+
 app.get('/sports', (request, response) => {
   // response.json(['Cycling', 'Weightlifting']);
   let sports = mongoUtil.sports();
@@ -35,6 +38,16 @@ app.get('/sports/:name', (request, response) => {
     // console.log(`Sport doc: ${doc}`);
     response.json(doc);
   });
+});
+
+app.post('/sports/:name/medals', jsonParser, (request, response) => {
+  let sportName = request.params.name;
+  let newMedal = request.body.medal;
+
+  console.log(`Sport Name: ${sportName}`);
+  console.log(`Medal: `, newMedal);
+
+  response.sendStatus(201);
 });
 
 app.listen(8181, () => console.log('Listening on 8181'));
