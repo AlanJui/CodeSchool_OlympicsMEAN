@@ -42,7 +42,11 @@ app.get('/sports/:name', (request, response) => {
 
 app.post('/sports/:name/medals', jsonParser, (request, response) => {
   let sportName = request.params.name;
-  let newMedal = request.body.medal;
+  let newMedal = request.body.medal || {};
+
+  if (!newMedal.division || !newMedal.year || !newMedal.country) {
+    response.sendStatus(400);
+  }
 
   // console.log(`Sport Name: ${sportName}`);
   // console.log(`Medal: `, newMedal);
