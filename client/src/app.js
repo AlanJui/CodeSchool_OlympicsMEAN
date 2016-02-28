@@ -64,9 +64,19 @@ angular.module('olympics', ['ui.router'])
       })
   })
 
-  .controller('sportsController', ['sportsService', function (sportsService) {
+  .controller('sportsController', ['sportsService', '$location',
+    function (sportsService, $location) {
 
     this.sports = sportsService.data;
+
+    this.isActive = (sport) => {
+      let pathRegExp = /sports\/(\w+)/;
+      let match = pathRegExp.exec($location.path());
+      if (match === null || match.length === 0) return false;
+
+      let selectedSportName = match[1];
+      return sport === selectedSportName;
+    };
 
   }])
 
@@ -76,16 +86,24 @@ angular.module('olympics', ['ui.router'])
 
   }])
 
-  .controller('NewMedalController', ['$stateParams', '$state',
-    function ($stateParams, $state) {
-      this.sportName = $stateParams.sportName;
+  .controller('NewMedalController', ['$stateParams', '$state', '$http',
+    function ($stateParams, $state, $http) {
 
-      this.saveMedal = (medal) => {
-        console.log('medal=', medal);
+    this.sportName = $stateParams.sportName;
 
-        $state.go('sports.medals', {
-          sportName: $stateParams.sportName
+    this.saveMedal = (medal) => {
+      // console.log('medal=', medal);
+
+      $http({
+        method: 'POST',
+        url: `/sports/${$stateParams.sportName}/medals`,
+        data: {medal}
+      })
+        .then((response) => {
+          $state.go('sports.medals', {
+            sportName: $stateParams.sportName
+          });
         });
-      };
-    }])
+    };
+  }])
   ;
